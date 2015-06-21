@@ -5,9 +5,10 @@ import "zone.js";
 import {NgFor, Component, View, bootstrap} from "angular2/angular2";
 import {ShadowDomStrategy, NativeShadowDomStrategy} from "angular2/render";
 import {Http, httpInjectables} from "angular2/http";
-import {RouteConfig, RouterOutlet, RouterLink, Router} from 'angular2/router';
+import {RouteConfig, RouterOutlet, RouterLink, Router, routerInjectables} from 'angular2/router';
 import {bind} from "angular2/di";
-//sweet
+import {BrowserLocation} from 'angular2/src/router/browser_location';
+
 @Component({
     properties:["name", "thumbnail", "price"],
     selector: "game-item",
@@ -38,6 +39,7 @@ class GameItem{
 class GameList{
     games = [];
     constructor(http:Http){
+        console.log("using game list component")
         http.get("/games")
             .map(res => res.json())
             .subscribe(games => this.games = games);
@@ -45,16 +47,29 @@ class GameList{
 }
 
 
+@Component({selector:"game-detail"})
+@View({template:"Game Detail"})
+class GameDetail{}
 
 
 
-
-@Component({selector:"game-store"})
+@RouteConfig([
+  { path: '/',          as: 'home',      component: GameList },
+  { path: '/gamedetail', as: 'gamedetail', component: GameDetail }
+])
+@Component({
+    appInjector: [routerInjectables],
+    selector:"game-store"
+})
 @View({
-    directives: [GameList]
+    directives: [RouterOutlet]
     templateUrl: "templates/game-store.html"
 })
-class GameStore{}
+class GameStore{
+    constructor(router: Router){
+
+    }
+}
 
 bootstrap(GameStore, [bind(ShadowDomStrategy).toClass(NativeShadowDomStrategy)]).then(
     success => console.log(success),
