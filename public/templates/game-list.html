@@ -1,0 +1,10 @@
+<div>
+    <game-item
+        *ng-for="#game of games"
+        [name]="game.name"
+        [thumbnail]="game.thumbnail"
+        [price]="game.price"
+        [id]="game.id"
+        >
+    </game-item>
+</div>
