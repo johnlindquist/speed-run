@@ -29,11 +29,11 @@ class GameItem{
 }
 
 @Component({
-    appInjector:[httpInjectables],
+    appInjector:[httpInjectables, routerInjectables],
     selector:"game-list"
 })
 @View({
-    directives: [NgFor, GameItem],
+    directives: [NgFor, GameItem, RouterLink],
     templateUrl: "templates/game-list.html"
 })
 class GameList{
@@ -55,7 +55,7 @@ class GameDetail{}
 
 @RouteConfig([
   { path: '/',          as: 'home',      component: GameList },
-  { path: '/gamedetail', as: 'gamedetail', component: GameDetail }
+  { path: '/#gamedetail', as: 'gd', component: GameDetail }
 ])
 @Component({
     appInjector: [routerInjectables],

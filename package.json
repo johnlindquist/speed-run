@@ -2,7 +2,11 @@
   "scripts": {
     "json-server": "json-server database.json",
     "browser-sync": "browser-sync start --proxy localhost:3000 --files \"**/*.ts, **/*.html\"",
-    "play": "npm run json-server & npm run browser-sync"
+    "install-globals": "npm install -g jspm@beta && npm install -g json-server@0.7.18",
+    "start": "npm run json-server & npm run browser-sync",
+    "jspm-install": "jspm install",
+    "jspm-bundle": "jspm bundle angular2/angular2 public/dist/angular2.js",
+    "postinstall": "npm run install-globals && npm run jspm-install"
   },
   "jspm": {
     "directories": {
