@@ -11,21 +11,6 @@ System.config({
     "npm:*": "jspm_packages/npm/*",
     "app": "src"
   },
-  "shim": {
-    "deps": [
-      "es6-shim",
-      "reflect-metadata",
-      "zone.js"
-    ]
-  },
-  "bundles": {
-    "angular2-and-deps": [
-      "es6-shim",
-      "reflect-metadata",
-      "zone.js",
-      "angular2/angular2"
-    ]
-  },
   "packages": {
     "app": {
       "main": "main",

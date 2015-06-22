@@ -55,7 +55,7 @@ class GameDetail{}
 
 @RouteConfig([
   { path: '/',          as: 'home',      component: GameList },
-  { path: '/#gamedetail', as: 'gd', component: GameDetail }
+  { path: 'gamedetail', as: 'gamedetail', component: GameDetail }
 ])
 @Component({
     appInjector: [routerInjectables],

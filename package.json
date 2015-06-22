@@ -6,7 +6,7 @@
     "start": "npm run json-server & npm run browser-sync",
     "jspm-install": "jspm install",
     "jspm-bundle": "jspm bundle angular2/angular2 public/dist/angular2.js",
-    "postinstall": "npm run install-globals && npm run jspm-install"
+    "postinstall": "npm run install-globals && npm run jspm-install && npm run jspm-bundle"
   },
   "jspm": {
     "directories": {
