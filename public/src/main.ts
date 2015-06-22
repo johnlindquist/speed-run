@@ -7,7 +7,8 @@ import {ShadowDomStrategy, NativeShadowDomStrategy} from "angular2/render";
 import {Http, httpInjectables} from "angular2/http";
 import {RouteConfig, RouterOutlet, RouterLink, Router, routerInjectables} from 'angular2/router';
 import {bind} from "angular2/di";
-import {BrowserLocation} from 'angular2/src/router/browser_location';
+
+const SERVER = "http://localhost:3000/";
 
 @Component({
     properties:["name", "thumbnail", "price"],
@@ -29,7 +30,7 @@ class GameItem{
 }
 
 @Component({
-    appInjector:[httpInjectables, routerInjectables],
+    appInjector:[httpInjectables],
     selector:"game-list"
 })
 @View({
@@ -38,36 +39,48 @@ class GameItem{
 })
 class GameList{
     games = [];
-    constructor(http:Http){
+    constructor(http:Http, public router:Router){
         console.log("using game list component")
-        http.get("/games")
-            .map(res => res.json())
+        http.get(SERVER + "games")
+            .map(res => res.json()
+                .map(game =>{
+                    game.thumbnail = SERVER + game.thumbnail;
+                    game.image = SERVER + game.image;
+                    return game;
+                }))
             .subscribe(games => this.games = games);
+    }
+
+    onClick(){
+        this.router.parent.navigate("/gamedetail");
+        console.log(this.router);
     }
 }
 
+@Component({selector:"game-cart"})
+@View({ template:`This is a game cart`})
+class GameCart{}
 
-@Component({selector:"game-detail"})
-@View({template:"Game Detail"})
+
+@Component({selector:"gamedetail"})
+@View({template:`<div>This is a gamedetail page</div>`})
 class GameDetail{}
 
-
-
 @RouteConfig([
-  { path: '/',          as: 'home',      component: GameList },
-  { path: 'gamedetail', as: 'gamedetail', component: GameDetail }
+  { path: '/', as: 'home', component: GameList },
+  { path: '/cart', as: 'cart', component: GameCart }
 ])
 @Component({
     appInjector: [routerInjectables],
     selector:"game-store"
 })
 @View({
-    directives: [RouterOutlet]
+    directives: [RouterOutlet, RouterLink],
     templateUrl: "templates/game-store.html"
 })
 class GameStore{
     constructor(router: Router){
-
+        router.navigate("/home");
     }
 }
 
