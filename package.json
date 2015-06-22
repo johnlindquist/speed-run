@@ -1,7 +1,7 @@
 {
   "scripts": {
     "json-server": "json-server database.json",
-    "browser-sync": "node server.js",
+    "browser-sync": "node dev-server.js",
     "install-globals": "npm install -g jspm@beta && npm install -g json-server@0.7.18",
     "start": "npm run json-server & npm run browser-sync",
     "jspm-install": "jspm install",
