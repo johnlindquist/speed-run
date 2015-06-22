@@ -6,14 +6,34 @@ import {NgFor, Component, View, bootstrap} from "angular2/angular2";
 import {ShadowDomStrategy, NativeShadowDomStrategy} from "angular2/render";
 import {Http, httpInjectables} from "angular2/http";
 import {RouteConfig, RouterOutlet, RouterLink, Router, routerInjectables} from 'angular2/router';
-import {bind} from "angular2/di";
+import {bind, Injectable} from "angular2/di";
 
-const SERVER = "http://localhost:3000/";
+const SERVER = "http://localhost:3000/games";
+
+class CartService {
+    games = [];
+    //add all the game prices together for the total
+    total = ()=> this.games
+                     .map(game => game.price)
+                     .reduce((a, b) => a + b);
+}
+
+@Component({ selector: "game-cart" })
+@View({
+    directives: [NgFor],
+    templateUrl: "templates/game-cart.html"
+})
+class GameCart {
+    constructor(public cartService: CartService) {
+        console.log(cartService);
+    }
+}
+
+
 
 @Component({
-    properties:["name", "thumbnail", "price"],
+    properties:["name", "thumbnail", "price", "id"],
     selector: "game-item",
-    host: {'(click)': 'onClick($event)'},
 })
 @View({
     templateUrl: "templates/game-item.html"
@@ -24,9 +44,7 @@ class GameItem{
     price;
     id;
 
-    onClick(event){
-        console.log(event);
-    }
+    getColor = () => this.price > 40 ? "red" : "white";
 }
 
 @Component({
@@ -39,27 +57,18 @@ class GameItem{
 })
 class GameList{
     games = [];
-    constructor(http:Http, public router:Router){
+    constructor(http:Http, public cartService:CartService){
         console.log("using game list component")
-        http.get(SERVER + "games")
-            .map(res => res.json()
-                .map(game =>{
-                    game.thumbnail = SERVER + game.thumbnail;
-                    game.image = SERVER + game.image;
-                    return game;
-                }))
+        http.get(SERVER)
+            .map(res => res.json())
             .subscribe(games => this.games = games);
     }
 
-    onClick(){
-        this.router.parent.navigate("/gamedetail");
-        console.log(this.router);
+    onGameClick(game){
+        this.cartService.games.push(game);
     }
 }
 
-@Component({selector:"game-cart"})
-@View({ template:`This is a game cart`})
-class GameCart{}
 
 
 @Component({selector:"gamedetail"})
@@ -78,13 +87,13 @@ class GameDetail{}
     directives: [RouterOutlet, RouterLink],
     templateUrl: "templates/game-store.html"
 })
-class GameStore{
-    constructor(router: Router){
-        router.navigate("/home");
-    }
-}
+class GameStore{}
 
-bootstrap(GameStore, [bind(ShadowDomStrategy).toClass(NativeShadowDomStrategy)]).then(
-    success => console.log(success),
-    error => console.log(error)
-);
+bootstrap(GameStore, [
+    bind(ShadowDomStrategy).toClass(NativeShadowDomStrategy),
+    CartService
+    ])
+    .then(
+        success => console.log(success),
+        error => console.log(error)
+    );

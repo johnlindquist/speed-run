@@ -1,5 +1,5 @@
 <style>
-    div{
+    .gameitem{
         border-top: 2px solid black;
         overflow: auto;
     }
@@ -11,8 +11,7 @@
     }
 </style>
 
-<div [style.backgroundColor]="black">
-
+<div class="gameitem" [style.background-color]="getColor()">
     <img [src]="thumbnail" alt="">
     <h3>{{name}}</h3>
     ${{price}}
