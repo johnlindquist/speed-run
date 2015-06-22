@@ -25,6 +25,7 @@
     }
   },
   "dependencies": {
-    "browser-sync": "^2.7.12"
+    "browser-sync": "^2.7.12",
+    "connect-history-api-fallback": "^1.1.0"
   }
 }
