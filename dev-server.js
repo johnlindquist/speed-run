@@ -6,5 +6,6 @@ bs.init({
     server: "public",
     port: 3001,
     middleware: [ history() ],
-    files: "**/*.html, **/*.ts"
+    files: "**/*.html, **/*.ts",
+    notify: false
 });

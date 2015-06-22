@@ -5,17 +5,12 @@
     <title>Document</title>
     <script src="jspm_packages/system.js"></script>
     <script src="config.js"></script>
-    <!-- You don't have to bundle, but it saves about 200 requests :) -->
-    <script src="dist/angular2.js"></script>
+
     <script>System.import('bootstrap/css/bootstrap.css!');</script>
+    <script>System.import("app");</script>
 </head>
 <body>
-    <game-store>
-        Loading...
-    </game-store>
 
-    <script>
-        System.import('app');
-    </script>
+    <game-store>Loading...</game-store>
 </body>
 </html>
