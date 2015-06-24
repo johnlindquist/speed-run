@@ -14,7 +14,7 @@ class CartService{
     games = [];
     total =()=> this.games
                     .map(game => game.price)
-                    .reduce((a, b)=> a + b);
+                    .reduce((a, b)=> a + b, 0);
 }
 
 @Component({selector:"game-cart"})
