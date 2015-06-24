@@ -35,6 +35,10 @@ class GameCart{
 })
 @View({templateUrl:"templates/game-item.html"})
 class GameItem{
+    name: string;
+    thumbnail: string;
+    price: number;
+    id: number;
     color = () => this.price > 40 ? "red" : "white";
 }
 
@@ -82,4 +86,4 @@ bootstrap(GameStore, [
     ]).then(
     success => console.log(success),
     error => console.log(error)
-)
+);
