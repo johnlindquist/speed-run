@@ -14,7 +14,7 @@ class CartService{
     games = [];
     total =()=> this.games
                     .map(game => game.price)
-                    .reduce((a, b)=> a + b);
+                    .reduce((a, b)=> a + b, 0);
 }
 
 @Component({selector:"game-cart"})
@@ -35,6 +35,10 @@ class GameCart{
 })
 @View({templateUrl:"templates/game-item.html"})
 class GameItem{
+    name: string;
+    thumbnail: string;
+    price: number;
+    id: number;
     color = () => this.price > 40 ? "red" : "white";
 }
 
@@ -82,4 +86,4 @@ bootstrap(GameStore, [
     ]).then(
     success => console.log(success),
     error => console.log(error)
-)
+);
