@@ -20,7 +20,7 @@
             "zone.js": "npm:zone.js@^0.5.1"
         },
         "devDependencies": {
-            "typescript": "github:mhegazy/typescript@v1.5-beta2"
+            "typescript": "npm:typescript@1.5.3"
         }
     },
     "dependencies": {
